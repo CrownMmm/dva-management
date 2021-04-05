@@ -43,40 +43,40 @@ const RouteConfig = [
                 component: () => import('./pages/About'),
                 model: [],
                 isAuthority,
-                // routes: [
-                //     {
-                //         path: '/about/history',
-                //         model: [],
-                //         component: () => import('./pages/About/History')
-                //     },
-                // {
-                //     path: '/about/contact',
-                //     model: [],
-                //     component: () => import('./pages/About/Contact'),
-                //     routes: [
-                //         {
-                //             path: '/about/contact/phone',
-                //             model: [],
-                //             component: () => import('./pages/About/Phone')
-                //         },
-                //         {
-                //             path: '/about/contact/address',
-                //             model: [],
-                //             component: () => import('./pages/About/Address')
-                //         }
-                //     ]
-                // },
-                // {
-                //     path: '/about/orderingguide',
-                //     model: [],
-                //     component: () => import('./pages/About/OrderingGuide')
-                // },
-                // {
-                //     path: '/about/delivery',
-                //     model: [],
-                //     component: () => import('./pages/About/Delivery')
-                // }
-                // ] 
+                routes: [
+                    {
+                        path: '/about/history',
+                        model: [],
+                        component: () => import('./pages/About/History')
+                    },
+                    {
+                        path: '/about/contact',
+                        model: [],
+                        component: () => import('./pages/About/Contact'),
+                        routes: [
+                            {
+                                path: '/about/contact/phone',
+                                model: [],
+                                component: () => import('./pages/About/Phone')
+                            },
+                            {
+                                path: '/about/contact/address',
+                                model: [],
+                                component: () => import('./pages/About/Address')
+                            }
+                        ]
+                    },
+                    {
+                        path: '/about/orderingguide',
+                        model: [],
+                        component: () => import('./pages/About/OrderingGuide')
+                    },
+                    {
+                        path: '/about/delivery',
+                        model: [],
+                        component: () => import('./pages/About/Delivery')
+                    }
+                ]
             },
             {
                 path: '/login',
