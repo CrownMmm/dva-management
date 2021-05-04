@@ -1,6 +1,4 @@
-
 export default {
-
     namespace: 'global',
 
     state: {
@@ -10,21 +8,21 @@ export default {
             key: null
         }
     },
-    subscriptions: {
-        setup({ dispatch, history }) {  // eslint-disable-line
-        },
-    },
+
+    subscriptions: {},
 
     effects: {
-        *fetch({ payload }, { call, put }) {  // eslint-disable-line
-            yield put({ type: 'save' });
-        },
+        // dispatch 用户信息
+        *setUserInfo({ payload }, { put }) {
+            // eslint-disable-line
+            yield put({ type: 'set_userinfo', payload });
+        }
     },
 
     reducers: {
-        save(state, action) {
-            return { ...state, ...action.payload };
-        },
-    },
-
+        // 设置用户信息 userInfo的state
+        set_userinfo(state, { payload }) {
+            return { ...state, userInfo: payload };
+        }
+    }
 };

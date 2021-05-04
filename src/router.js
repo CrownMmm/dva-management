@@ -1,5 +1,5 @@
 import React from 'react';
-import { Router, Route, Switch } from 'dva/router';
+import { Router, Switch } from 'dva/router';
 // import IndexPage from './pages/IndexPage';
 // import Home from './pages/Home';
 // import Menus from './pages/Menus';
@@ -9,8 +9,8 @@ import { Router, Route, Switch } from 'dva/router';
 // import Register from './pages/User/Register';
 import SubRoutes from './utils/SubRoutes';
 
+// 私有路由的开关
 const isAuthority = true;
-
 
 const RouteConfig = [
     {
@@ -93,9 +93,12 @@ const RouteConfig = [
 ];
 
 function RouterConfig({ history, app }) {
+    // console.log('router.js');
+    // console.log(app);
     return (
         <Router history={history}>
             <Switch>
+                {/* <Route path="/" component={IndexPage} /> */}
                 {RouteConfig.map((route, i) => (
                     // 调用封装组件
                     <SubRoutes key={i} {...route} app={app} />

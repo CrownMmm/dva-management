@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Menu, Dropdown, Icon } from 'antd';
 import { Link } from 'dva/router';
-
 import style from './index.scss';
 
 const menus = [
@@ -40,8 +39,12 @@ const menus = [
         isAuthority: true
     }
 ];
+
 export default class index extends Component {
     constructor(props) {
+        // console.log(props);
+        // console.log('NavBar/index.js');
+
         super(props);
         this.state = {
             selectedKeys: []
@@ -49,9 +52,9 @@ export default class index extends Component {
     }
 
     /**
-        * 当页面刷新时，组件会重新加载，会执行 componentDidMount(cdm) 钩子函数
-        * 为解决刷新页面菜单与路由不同步问题，解决方法则放在 cdm 钩子函数里执行
-        */
+     * 当页面刷新时，组件会重新加载，会执行 componentDidMount(cdm) 钩子函数
+     * 为解决刷新页面菜单与路由不同步问题，解决方法则放在 cdm 钩子函数里执行
+     */
     componentDidMount() {
         this.handleSetSelectedKeys(this.props.location.pathname);
     }
@@ -75,9 +78,25 @@ export default class index extends Component {
         });
     }
 
+    handleClickMenu = ({ key }) => {
+        // 退出
+        if (key === 'logout') {
+            window.localStorage.clear();
+            this.props.history.push('/login');
+        }
+    };
+
+    menu = (
+        <Menu onClick={this.handleClickMenu}>
+            <Menu.Item key="logout">
+                <span>退出</span>
+            </Menu.Item>
+        </Menu>
+    );
+
     render() {
         return (
-            <nav className={style.header} >
+            <nav className={style.header}>
                 <a className={style.logo} href="http://www.baidu.com">
                     <svg
                         xmlns="http://www.w3.org/2000/svg"
@@ -100,18 +119,31 @@ export default class index extends Component {
                         <line x1="16.62" y1="12" x2="10.88" y2="21.94" />
                     </svg>
                 </a>
-                <Menu.Item
-                    className={style['menu-left']}
+                <Menu
                     mode="horizontal"
-                    defaultSelectedKeys={["home"]}
+                    defaultSelectedKeys={['home']}
+                    selectedKeys={this.state.selectedKeys}
                 >
-                    <Menu.Item key={"home"}>主页</Menu.Item>
-                    <Menu.Item key={"menus"}>菜单</Menu.Item>
-                    <Menu.Item key={"admin"}>管理</Menu.Item>
-                    <Menu.Item key={"about"}>关于我们</Menu.Item>
-                    <Menu.Item className={style.login} key={"login"}>登陆</Menu.Item>
-                    <Menu.Item className={style.register} key={"register"}>注册</Menu.Item>
-                </Menu.Item>
+                    {menus
+                        .filter(
+                            ({ isAuthority }) =>
+                                !(isAuthority && localStorage.key && localStorage.email)
+                        )
+                        .map(({ key, path, name, className }) => (
+                            <Menu.Item key={key} className={className}>
+                                <Link to={path}>{name}</Link>
+                            </Menu.Item>
+                        ))}
+                </Menu>
+                {/* 用户email和退出 */}
+                {localStorage.email && localStorage.key && (
+                    <Dropdown overlay={this.menu} className={style['dropdown-menu']}>
+                        <a className="ant-dropdown-link">
+                            <span className={style.email}>{localStorage.email}</span>{' '}
+                            <Icon className={style.icon} type="down" />
+                        </a>
+                    </Dropdown>
+                )}
             </nav>
         );
     }
